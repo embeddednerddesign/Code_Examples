@@ -1,0 +1,2 @@
+PySerial
+Python-msp430-tools

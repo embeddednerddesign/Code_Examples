@@ -1,0 +1,22 @@
+#!/bin/bash
+# save current crontab
+crontab -l > /home/ubuntu/site_specific/crontab.old
+
+# load crontab template
+cp /home/ubuntu/site_specific/crontab.template /home/ubuntu/site_specific/crontab.new
+
+# write the new cron jobs 
+echo "0,15,30,45 * * * *  /home/ubuntu/_send_radiomonitor_data > /tmp/send_radiomonitor.py.out 2>&1" >> //home/ubuntu/site_specific/crontab.new
+echo "0,15,30,45 * * * *  /home/ubuntu/_send_host_status > /tmp/send_hoststatus.py.out 2>&1" >> /home/ubuntu/site_specific/crontab.new
+echo "* * * * *  /home/ubuntu/_send_weather_data > /tmp/send_weather_data.out 2>&1" >> /home/ubuntu/site_specific/crontab.new
+echo "* * * * *  /home/ubuntu/_send_generator_data > /tmp/send_generator_data.out 2>&1" >> /home/ubuntu/site_specific/crontab.new
+echo "" >> /home/ubuntu/site_specific/crontab.new
+echo "# once per day, at 23:59, run the log archival process" >> /home/ubuntu/site_specific/crontab.new
+echo "59 23 * * * /home/ubuntu/_backup_logs > /tmp/gendata_archive_log.out 2>&1" >> /home/ubuntu/site_specific/crontab.new
+echo "" >> /home/ubuntu/site_specific/crontab.new
+echo "# once every 15 mins, update the site policies" >> /home/ubuntu/site_specific/crontab.new
+echo "#0,15,30,45 * * * * /home/ubuntu/_set_site_policies > /tmp/set_site_policies.out 2>&1" >> /home/ubuntu/site_specific/crontab.new
+echo "" >> /home/ubuntu/site_specific/crontab.new
+
+# install new crontab
+crontab /home/ubuntu/site_specific/crontab.new

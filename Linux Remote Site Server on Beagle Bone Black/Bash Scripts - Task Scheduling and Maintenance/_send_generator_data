@@ -1,0 +1,12 @@
+#!/bin/bash
+# check if the log archival process has locked us out
+if [ ! -f /home/ubuntu/backuplogs.lock ];
+# there is no lock file present, so carry on
+then
+	# invoke the environment variables script so that they are available to the rest of this script
+	. /home/ubuntu/site_specific/SetEnvVars
+	# kill off any other running instances of this script, just to be sure
+	pkill -9 -f send_generator_data.py
+	# run the script
+	python /home/ubuntu/scripts/send_generator_data.py $SITE_NAME $GEN_RANGE_START $GEN_RANGE_END $EXCLUDE_GENERATORS
+fi

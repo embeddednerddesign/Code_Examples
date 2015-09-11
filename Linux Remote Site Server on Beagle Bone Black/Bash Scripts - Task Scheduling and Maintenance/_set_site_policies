@@ -1,0 +1,30 @@
+#!/bin/bash
+# check if the log archival process has locked us out
+if [ ! -f /home/ubuntu/backuplogs.lock ];
+# there is no lock file present, so carry on
+then
+	# invoke the environment variables script so that they are available to the rest of this script
+	. /home/ubuntu/site_specific/SetEnvVars
+	# kill off any other running instances of this script, just to be sure
+	pkill -9 -f setSitePolicy.py
+	
+	# get the latest wind speed data
+	# check if the wind speed file is present
+	windSpeedFile=/home/ubuntu/latest_wind_speed.txt
+	if [ -f $windSpeedFile ]; then
+		# wind speed data is present
+		# the wind speed file is one line long
+		while read line; do
+		# save the wind speed value
+     		windspeed=$line
+		done < $windSpeedFile
+	else
+		# there is no wind speed data, so set to default
+		windspeed = "0"
+	fi
+	# check the wind speed for unsafe weather conditions (wind speed greater than 20)
+	# use the bc function allows us to compare floating point values and return a 1 or 0, representing a True or False result from the following statement
+	overlimit=$(echo "$windspeed > 20.0" | bc)
+	# check if overlimit is True
+	python /home/ubuntu/scripts/set_site_policy.py $SITE_NAME $GEN_RANGE_START $GEN_RANGE_END $EXCLUDE_GENERATORS $overlimit /home/ubuntu/site_specific/SitePolicies.json
+fi

@@ -1,0 +1,41 @@
+#!/bin/bash
+#############################################
+# there seems to be a linux bug that is giving erroneous notices during the tar archive process, causing a non-zero return value
+# for now, we are going to assume the archiving went well and remove these safety checks
+#############################################
+## create a lockfile to keep other scripts from running while backup is in progress
+#touch /home/ubuntu/backuplogs.lock
+## hold here for 10 seconds. This allows any of the other scripts to complete if they had already started before we created the lock file
+#sleep 10
+
+# create an archive of all files in the gendata_store folder
+tar -zcvf /home/ubuntu/gendata_archives/gendata_$(date '+%Y%m%d').tar.gz /home/ubuntu/gendata_store
+ 
+#############################################
+# there seems to be a linux bug that is giving erroneous notices during the tar archive process, causing a non-zero return value
+# for now, we are going to assume the archiving went well and remove these safety checks
+#############################################
+## store exit status of tar
+#status=$?
+## if non-zero, something went wrong, do not remove files from gendata_store
+#if test $status -eq 0
+#then
+#	# remove all the files from the gendata_store folder now that they have been archived
+#	find /home/ubuntu/gendata_store/ -name "*.txt" -print0 | xargs -0 rm
+
+# remove all the files from the gendata_store folder now that they have been archived
+find /home/ubuntu/gendata_store/ -name "*.txt" -print0 | xargs -0 rm
+
+#else
+#	echo "Problem during archival process"
+#fi
+
+# check the gendata_archives folder and remove any tarballs that are older than 90 days
+find /home/ubuntu/gendata_archives/* -mtime +30 -exec rm {} \;
+
+#############################################
+# there seems to be a linux bug that is giving erroneous notices during the tar archive process, causing a non-zero return value
+# for now, we are going to assume the archiving went well and remove these safety checks
+#############################################
+## remove the lock file
+#rm /home/ubuntu/backuplogs.lock

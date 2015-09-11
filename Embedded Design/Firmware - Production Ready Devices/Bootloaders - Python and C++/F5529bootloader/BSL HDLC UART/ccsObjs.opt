@@ -1,0 +1,1 @@
+"./AppMgr/TI_MSPBoot_VecRed_G2x53.obj" "./AppMgr/TI_MSPBoot_AppMgr.obj" "./AppMgr/Crc.obj" "./Comm/NWK_APP/TI_MSPBoot_CI_NWK_APP_HDLC.obj" "./Comm/PHY_DataLink/TI_MSPBoot_CI_PHYDL_USCI_UART.obj" "./MI/TI_MSPBoot_MI_Flash.obj" "./main.obj" "./boot.obj" "../Config/lnk_msp430f2559_Config_boot_1KB.cmd" -l"libc.a" 

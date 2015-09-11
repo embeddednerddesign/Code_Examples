@@ -1,0 +1,16 @@
+running bootloader manually
+
+cd ~/gen/workspace/bootloaders/F5529bootloader/BSL\ HDLC\ UART/
+mspdebug tilib 'prog F5529bootloader.txt'
+
+
+cd ~/gen/lib/msp430bootloaderprogrammer
+python -m msp430.bsl5.bl485 -vvv --debug --port=/dev/ttyACM1  -B 57600 -eP ../../release/InterconnectCRC.txt
+python -m msp430.bsl5.bl485 -vvv --debug --port=/dev/ttyACM1  -B 57600 -j
+
+
+
+app direct
+mspdebug tilib  'prog ~/gen/workspace/brightleaf/Interconnect/Debug/Interconnect.txt'
+
+
