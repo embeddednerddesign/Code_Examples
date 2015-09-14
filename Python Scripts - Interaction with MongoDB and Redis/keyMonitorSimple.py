@@ -18,8 +18,8 @@ EmailToListSituations = ['embeddednerddesign@gmail.com','nvyssotski@brightleafpo
 EmailToListReport = ['embeddednerddesign@gmail.com','nvyssotski@brightleafpower.com']
 EmailSubject = ""
 EmailBody = ""
-EmailUsername = "situationreporter@gmail.com"
-EmailPassword = "blp$ituationreporter94872"
+EmailUsername = ""
+EmailPassword = ""
 BROKERHOST  = "blprod.us"
 BROKERPORT  = 8123
 
